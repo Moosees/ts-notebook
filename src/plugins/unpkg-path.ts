@@ -10,7 +10,7 @@ export const unpkgPathPlugin = () => {
         if (args.path === 'index.js')
           return { path: args.path, namespace: 'a' };
 
-        if (args.resolveDir)
+        if (args.path.includes('./') && args.resolveDir)
           return {
             path: new URL(args.path, `https://unpkg.com${args.resolveDir}/`)
               .href,
@@ -30,8 +30,8 @@ export const unpkgPathPlugin = () => {
           return {
             loader: 'jsx',
             contents: `
-              import message from 'nested-test-pkg';
-              console.log(message);
+              import React, {useState} from 'react';
+              console.log(React, useState);
             `,
           };
         else {
