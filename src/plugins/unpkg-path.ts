@@ -4,7 +4,7 @@ import localForage from 'localforage';
 
 const packageCache = localForage.createInstance({ name: 'packageCache' });
 
-export const unpkgPathPlugin = () => {
+export const unpkgPathPlugin = (input: string) => {
   return {
     name: 'unpkg-path-plugin',
     setup(build: esbuild.PluginBuild) {
@@ -29,11 +29,7 @@ export const unpkgPathPlugin = () => {
         if (args.path === 'index.js')
           return {
             loader: 'jsx',
-            contents: `
-              import React, {useState} from 'react@16.0.0';
-              import ReactDOM from 'react-dom@16.0.0';
-              console.log(React, ReactDOM, useState);
-            `,
+            contents: input,
           };
         else {
           const cachedPackage = await packageCache.getItem<esbuild.OnLoadResult>(
