@@ -8,48 +8,56 @@ export const unpkgFetchPlugin = (input: string) => {
   return {
     name: 'unpkg-fetch-plugin',
     setup(build: esbuild.PluginBuild) {
+      // load entry point
+      build.onLoad({ filter: /(^index\.js$)/ }, () => ({
+        loader: 'jsx',
+        contents: input,
+      }));
+      // load cached package if found
       build.onLoad({ filter: /.*/ }, async (args: any) => {
-        if (args.path === 'index.js')
-          return {
-            loader: 'jsx',
-            contents: input,
-          };
-        else {
-          const cachedPackage = await packageCache.getItem<esbuild.OnLoadResult>(
-            args.path
-          );
+        const cachedPackage = await packageCache.getItem<esbuild.OnLoadResult>(
+          args.path
+        );
+        if (cachedPackage) return cachedPackage;
+      });
+      // load css
+      build.onLoad({ filter: /.css$/ }, async (args: any) => {
+        const { data, request } = await axios.get(args.path);
 
-          if (cachedPackage) return cachedPackage;
+        const parsedCss = data
+          .replace(/\n/g, '')
+          .replace(/"/g, '\\"')
+          .replace(/'/g, "\\'");
 
-          const { data, request } = await axios.get(args.path);
-
-          const fileType = args.path.match(/.css$/) ? 'css' : 'jsx';
-          const parsedCss =
-            fileType === 'css'
-              ? data
-                  .replace(/\n/g, '')
-                  .replace(/"/g, '\\"')
-                  .replace(/'/g, "\\'")
-              : '';
-          const contents =
-            fileType === 'css'
-              ? `
+        const contents = `
             const style = document.createElement('style');
             style.innerText = '${parsedCss}';
             document.head.appendChild(style);
-          `
-              : data;
+          `;
 
-          const newPackage: esbuild.OnLoadResult = {
-            loader: 'jsx',
-            contents,
-            resolveDir: new URL('./', request.responseURL).pathname,
-          };
+        const newPackage: esbuild.OnLoadResult = {
+          loader: 'jsx',
+          contents,
+          resolveDir: new URL('./', request.responseURL).pathname,
+        };
 
-          await packageCache.setItem(args.path, newPackage);
+        await packageCache.setItem(args.path, newPackage);
 
-          return newPackage;
-        }
+        return newPackage;
+      });
+      // load jsx
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
+        const { data, request } = await axios.get(args.path);
+
+        const newPackage: esbuild.OnLoadResult = {
+          loader: 'jsx',
+          contents: data,
+          resolveDir: new URL('./', request.responseURL).pathname,
+        };
+
+        await packageCache.setItem(args.path, newPackage);
+
+        return newPackage;
       });
     },
   };
