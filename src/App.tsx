@@ -11,47 +11,7 @@ const App = () => <div>test</div>;
 ReactDOM.render(<App/>, document.querySelector("#root"))
 `;
 
-const App = () => {
-  const [input, setInput] = useState(dummyText);
-  const esbuildRef = useRef<any>();
-  const iframeRef = useRef<any>();
-
-  const startService = async () => {
-    esbuildRef.current = await esbuild.startService({
-      worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.33/esbuild.wasm',
-    });
-  };
-
-  useEffect(() => {
-    startService();
-  }, []);
-
-  const handleSubmit = async () => {
-    if (!esbuildRef.current || !input) return;
-    try {
-      const result = await esbuildRef.current.build({
-        entryPoints: ['index.js'],
-        bundle: true,
-        write: false,
-        plugins: [unpkgPathPlugin(), unpkgFetchPlugin(input)],
-        define: {
-          'process.env.NODE_ENV': '"production"',
-          global: 'window',
-        },
-      });
-
-      if (iframeRef.current)
-        iframeRef.current.contentWindow.postMessage(
-          result.outputFiles[0].text,
-          '*'
-        );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const iframeScrDoc = `
+const iframeScrDoc = `
     <html>
       <head></head>
       <body>
@@ -70,6 +30,47 @@ const App = () => {
       </body>
     </html>
   `;
+
+const App = () => {
+  const [input, setInput] = useState(dummyText);
+  const esbuildRef = useRef<any>();
+  const iframeRef = useRef<any>();
+
+  const startService = async () => {
+    esbuildRef.current = await esbuild.startService({
+      worker: true,
+      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.33/esbuild.wasm',
+    });
+  };
+
+  useEffect(() => {
+    startService();
+  }, []);
+
+  const handleSubmit = async () => {
+    if (!esbuildRef.current || !iframeRef.current || !input) return;
+    try {
+      iframeRef.current.srcdoc = iframeScrDoc;
+
+      const result = await esbuildRef.current.build({
+        entryPoints: ['index.js'],
+        bundle: true,
+        write: false,
+        plugins: [unpkgPathPlugin(), unpkgFetchPlugin(input)],
+        define: {
+          'process.env.NODE_ENV': '"production"',
+          global: 'window',
+        },
+      });
+
+      iframeRef.current.contentWindow.postMessage(
+        result.outputFiles[0].text,
+        '*'
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
