@@ -1,15 +1,8 @@
 import * as esbuild from 'esbuild-wasm';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import CodeEditor from './components/code-editor';
 import { unpkgFetchPlugin } from './plugins/unpkg-fetch';
 import { unpkgPathPlugin } from './plugins/unpkg-path';
-
-const dummyText = `import React from 'react';
-import ReactDOM from 'react-dom';
-
-const App = () => <div>test</div>;
-
-ReactDOM.render(<App/>, document.querySelector("#root"))
-`;
 
 const iframeScrDoc = `
     <html>
@@ -32,7 +25,6 @@ const iframeScrDoc = `
   `;
 
 const App = () => {
-  const [input, setInput] = useState(dummyText);
   const esbuildRef = useRef<any>();
   const iframeRef = useRef<any>();
 
@@ -48,7 +40,7 @@ const App = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (!esbuildRef.current || !iframeRef.current || !input) return;
+    if (!esbuildRef.current || !iframeRef.current) return;
     try {
       iframeRef.current.srcdoc = iframeScrDoc;
 
@@ -56,7 +48,7 @@ const App = () => {
         entryPoints: ['index.js'],
         bundle: true,
         write: false,
-        plugins: [unpkgPathPlugin(), unpkgFetchPlugin(input)],
+        plugins: [unpkgPathPlugin(), unpkgFetchPlugin('')],
         define: {
           'process.env.NODE_ENV': '"production"',
           global: 'window',
@@ -74,12 +66,7 @@ const App = () => {
 
   return (
     <div>
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        rows={14}
-        cols={48}
-      ></textarea>
+      <CodeEditor />
       <div>
         <button onClick={handleSubmit}>Submit</button>
       </div>
