@@ -1,8 +1,16 @@
 import * as esbuild from 'esbuild-wasm';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CodeEditor from './components/code-editor';
 import { unpkgFetchPlugin } from './plugins/unpkg-fetch';
 import { unpkgPathPlugin } from './plugins/unpkg-path';
+
+const dummyCode = `import React from 'react';
+  import ReactDOM from 'react-dom';
+
+  const App = () => <div>test</div>;
+
+  ReactDOM.render(<App/>, document.querySelector("#root"))
+`;
 
 const iframeScrDoc = `
     <html>
@@ -27,6 +35,7 @@ const iframeScrDoc = `
 const App = () => {
   const esbuildRef = useRef<any>();
   const iframeRef = useRef<any>();
+  const [code, setCode] = useState(dummyCode);
 
   const startService = async () => {
     esbuildRef.current = await esbuild.startService({
@@ -48,7 +57,7 @@ const App = () => {
         entryPoints: ['index.js'],
         bundle: true,
         write: false,
-        plugins: [unpkgPathPlugin(), unpkgFetchPlugin('')],
+        plugins: [unpkgPathPlugin(), unpkgFetchPlugin(code)],
         define: {
           'process.env.NODE_ENV': '"production"',
           global: 'window',
@@ -66,7 +75,7 @@ const App = () => {
 
   return (
     <div>
-      <CodeEditor />
+      <CodeEditor defaultValue={dummyCode} onChange={setCode} />
       <div>
         <button onClick={handleSubmit}>Submit</button>
       </div>

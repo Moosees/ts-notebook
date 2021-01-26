@@ -1,14 +1,13 @@
-import Editor, { EditorProps } from '@monaco-editor/react';
+import Editor, { OnMount } from '@monaco-editor/react';
+import { editor } from 'monaco-editor';
+import { useRef } from 'react';
 
-const dummyCode = `import React from 'react';
-  import ReactDOM from 'react-dom';
+interface CodeEditorProps {
+  defaultValue: string;
+  onChange(value: string): void;
+}
 
-  const App = () => <div>test</div>;
-
-  ReactDOM.render(<App/>, document.querySelector("#root"))
-`;
-
-const options: EditorProps['options'] = {
+const options: editor.IStandaloneEditorConstructionOptions = {
   automaticLayout: true,
   folding: false,
   fontSize: 14,
@@ -19,15 +18,24 @@ const options: EditorProps['options'] = {
   wordWrap: 'on',
 };
 
-const CodeEditor = () => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ defaultValue, onChange }) => {
+  const editorRef = useRef<any>(null);
+
+  const handleEditorDidMount: OnMount = (editor, _monaco) => {
+    editorRef.current = editor;
+    editor.onDidChangeModelContent(() => onChange(editor.getValue()));
+    editor.getModel()?.updateOptions({ tabSize: 2 });
+  };
+
   return (
     <Editor
       theme="vs-dark"
       height="40vh"
       width="50vw"
       language="javascript"
-      defaultValue={dummyCode}
+      defaultValue={defaultValue}
       options={options}
+      onMount={handleEditorDidMount}
     />
   );
 };
