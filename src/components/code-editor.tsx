@@ -3,6 +3,7 @@ import { editor } from 'monaco-editor';
 import prettier from 'prettier';
 import babel from 'prettier/parser-babel';
 import { useRef } from 'react';
+import './code-editor.css';
 
 interface CodeEditorProps {
   defaultValue: string;
@@ -41,17 +42,21 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ defaultValue, onChange }) => {
         singleQuote: true,
         trailingComma: 'all',
       });
-
     formatted && editorRef.current.setValue(formatted);
   };
 
   return (
-    <div>
-      <button onClick={handleFormat}>Format code</button>
+    <div className="editor-container">
+      <button
+        className="button button-format is-info is-small"
+        onClick={handleFormat}
+      >
+        Format code
+      </button>
       <Editor
         theme="vs-dark"
         height="40vh"
-        width="50vw"
+        width="100%"
         language="javascript"
         defaultValue={defaultValue}
         options={options}
