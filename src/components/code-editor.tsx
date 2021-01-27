@@ -1,5 +1,7 @@
 import Editor, { OnMount } from '@monaco-editor/react';
+import j from 'jscodeshift';
 import { editor } from 'monaco-editor';
+import MonacoJSXHighlighter from 'monaco-jsx-highlighter';
 import prettier from 'prettier';
 import babel from 'prettier/parser-babel';
 import { useRef } from 'react';
@@ -24,10 +26,18 @@ const options: editor.IStandaloneEditorConstructionOptions = {
 const CodeEditor: React.FC<CodeEditorProps> = ({ defaultValue, onChange }) => {
   const editorRef = useRef<any>(null);
 
-  const handleEditorDidMount: OnMount = (editor, _monaco) => {
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
     editor.onDidChangeModelContent(() => onChange(editor.getValue()));
     editor.getModel()?.updateOptions({ tabSize: 2 });
+
+    const monacoJSXHighlighter = new MonacoJSXHighlighter(monaco, j, editor);
+    monacoJSXHighlighter.highLightOnDidChangeModelContent(
+      () => {},
+      () => {},
+      undefined,
+      () => {}
+    );
   };
 
   const handleFormat = () => {
