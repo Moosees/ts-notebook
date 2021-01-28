@@ -24,7 +24,7 @@ const iframeScrDoc = `
     </html>
   `;
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const CodePreview: React.FC<PreviewProps> = ({ code }) => {
   const iframeRef = useRef<any>();
 
   useEffect(() => {
@@ -45,4 +45,4 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
   );
 };
 
-export default Preview;
+export default CodePreview;
