@@ -65,8 +65,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ defaultValue, onChange }) => {
       </button>
       <Editor
         theme="vs-dark"
-        height="40vh"
-        width="100%"
         language="javascript"
         defaultValue={defaultValue}
         options={options}

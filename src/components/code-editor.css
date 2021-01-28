@@ -1,6 +1,7 @@
 .editor-container {
   height: 100%;
   position: relative;
+  width: 50%;
 }
 
 .editor-container .button-format {
@@ -17,37 +18,37 @@
 }
 
 .mtk100.Identifier.JsxElement.Bracket {
-    color: rgb(47, 149, 190);
+  color: rgb(47, 149, 190);
 }
 
 .mtk1000.Identifier.JsxOpeningElement.Bracket {
-    color: rgb(47, 149, 190);
-    font-weight: bold;
+  color: rgb(47, 149, 190);
+  font-weight: bold;
 }
 
 .mtk1001.Identifier.JsxClosingElement.Bracket {
-    color: rgb(47, 149, 190);
-    font-weight: lighter;
+  color: rgb(47, 149, 190);
+  font-weight: lighter;
 }
 
 .mtk101.Identifier.JsxOpeningElement.Identifier {
-    color: rgb(86, 134, 207);
+  color: rgb(86, 134, 207);
 }
 
 .mtk102.Identifier.JsxClosingElement.Identifier {
-    color: rgb(86, 134, 207);
-    font-weight: lighter;
+  color: rgb(86, 134, 207);
+  font-weight: lighter;
 }
 
 .mtk103.Identifier.JsxAttribute.Identifier {
-    color: rgb(140, 182, 216);
+  color: rgb(140, 182, 216);
 }
 
 .mtk104.JsxElement.JsxText {
-    color: #d2cdf8;
+  color: #d2cdf8;
 }
 
 .mtk105.glyph.Identifier.JsxElement {
-    background: #61dafb;
-    opacity: 0.25;
+  background: #61dafb;
+  opacity: 0.25;
 }

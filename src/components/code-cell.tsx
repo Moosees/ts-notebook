@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { bundleCode } from '../esbuild-helpers';
+import './code-cell.css';
 import CodeEditor from './code-editor';
 import CodePreview from './code-preview';
+import Resizable from './resizable';
 
 const defaultCode = `import React from 'react';
 import ReactDOM from 'react-dom';
@@ -21,13 +23,15 @@ const CodeCell = () => {
   };
 
   return (
-    <div>
-      <CodeEditor defaultValue={defaultCode} onChange={setEditorCode} />
-      <div>
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
-      <CodePreview code={previewCode} />
-    </div>
+    <Resizable direction="vertical">
+      <section className="code-cell-section">
+        <CodeEditor defaultValue={defaultCode} onChange={setEditorCode} />
+        <CodePreview code={previewCode} />
+        {/* <div>
+          <button onClick={handleSubmit}>Submit</button>
+        </div> */}
+      </section>
+    </Resizable>
   );
 };
 
