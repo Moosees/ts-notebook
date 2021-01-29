@@ -25,7 +25,9 @@ const CodeCell = () => {
   return (
     <Resizable direction="vertical">
       <section className="code-cell-section">
-        <CodeEditor defaultValue={defaultCode} onChange={setEditorCode} />
+        <Resizable direction="horizontal">
+          <CodeEditor defaultValue={defaultCode} onChange={setEditorCode} />
+        </Resizable>
         <CodePreview code={previewCode} />
         {/* <div>
           <button onClick={handleSubmit}>Submit</button>

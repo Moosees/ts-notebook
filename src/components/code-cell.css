@@ -1,5 +1,5 @@
 .code-cell-section {
+  height: calc(100% - 10px);
   display: flex;
-  height: 100%;
   width: 100%;
 }
