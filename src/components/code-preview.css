@@ -5,17 +5,10 @@
 }
 
 .preview-container iframe {
-  background-color: #fff;
   height: 100%;
   width: 100%;
 }
 
-.react-draggable-transparent-selection .preview-container::after {
-  bottom: 0;
-  content: '';
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+.react-draggable-transparent-selection .preview-container {
+  pointer-events: none;
 }
