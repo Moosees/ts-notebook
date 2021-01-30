@@ -16,11 +16,13 @@ ReactDOM.render(<App/>, document.querySelector("#root"));
 const CodeCell = () => {
   const [editorCode, setEditorCode] = useState(defaultCode);
   const [previewCode, setPreviewCode] = useState('');
+  const [previewMsg, setPreviewMsg] = useState('');
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      const bundledCode = await bundleCode(editorCode);
-      setPreviewCode(bundledCode);
+      const result = await bundleCode(editorCode);
+      setPreviewCode(result.code);
+      setPreviewMsg(result.message);
     }, 600);
 
     return () => clearTimeout(timeout);
@@ -32,7 +34,7 @@ const CodeCell = () => {
         <Resizable direction="horizontal">
           <CodeEditor defaultValue={defaultCode} onChange={setEditorCode} />
         </Resizable>
-        <CodePreview code={previewCode} />
+        <CodePreview code={previewCode} msg={previewMsg} />
       </section>
     </Resizable>
   );
