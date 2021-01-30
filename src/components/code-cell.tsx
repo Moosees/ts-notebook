@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { bundleCode } from '../esbuild-helpers';
 import './code-cell.css';
 import CodeEditor from './code-editor';
@@ -17,10 +17,14 @@ const CodeCell = () => {
   const [editorCode, setEditorCode] = useState(defaultCode);
   const [previewCode, setPreviewCode] = useState('');
 
-  const handleSubmit = async () => {
-    const bundledCode = await bundleCode(editorCode);
-    setPreviewCode(bundledCode);
-  };
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      const bundledCode = await bundleCode(editorCode);
+      setPreviewCode(bundledCode);
+    }, 600);
+
+    return () => clearTimeout(timeout);
+  }, [editorCode]);
 
   return (
     <Resizable direction="vertical">
@@ -29,9 +33,6 @@ const CodeCell = () => {
           <CodeEditor defaultValue={defaultCode} onChange={setEditorCode} />
         </Resizable>
         <CodePreview code={previewCode} />
-        {/* <div>
-          <button onClick={handleSubmit}>Submit</button>
-        </div> */}
       </section>
     </Resizable>
   );
