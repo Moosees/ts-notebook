@@ -11,15 +11,19 @@ const iframeScrDoc = `
       <body>
         <div id="root"></div>
         <script>
+          const handleError = (error) => {
+            const errorHTML = '<div><h4 style="color: red;">Error!</h4>'+error+'</div>';
+            document.querySelector('#root').innerHTML = errorHTML;
+            console.error(error);
+          };
+          window.addEventListener('error', (e) => {
+            e.preventDefault();
+            console.log({e})
+            handleError(e.message);
+          });
           window.addEventListener('message', (e) => {
-            try {
-              eval(e.data);
-            } catch (error) {
-              const errorHTML = '<div><h4 style="color: red;">Runtime Error!</h4>'+error+'</div>';
-              document.querySelector('#root').innerHTML = errorHTML;
-              console.error(error);
-            }
-          }, false)
+            eval(e.data);
+          }, false);
         </script>
       </body>
     </html>
