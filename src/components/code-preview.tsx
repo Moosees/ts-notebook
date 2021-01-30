@@ -7,9 +7,7 @@ interface PreviewProps {
 
 const iframeScrDoc = `
     <html>
-      <head>
-        <style>body {background-color: #fff;}</style>
-      </head>
+      <head></head>
       <body>
         <div id="root"></div>
         <script>
@@ -32,8 +30,14 @@ const CodePreview: React.FC<PreviewProps> = ({ code }) => {
 
   useEffect(() => {
     if (!iframeRef.current) return;
-    // iframeRef.current.srcdoc = iframeScrDoc;
-    iframeRef.current.contentWindow.postMessage(code, '*');
+
+    iframeRef.current.srcdoc = iframeScrDoc;
+
+    const timeout = setTimeout(() => {
+      iframeRef.current.contentWindow.postMessage(code, '*');
+    }, 50);
+
+    return () => clearTimeout(timeout);
   }, [code]);
 
   return (
