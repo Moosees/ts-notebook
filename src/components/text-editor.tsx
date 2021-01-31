@@ -20,7 +20,11 @@ const TextEditor: React.FC = () => {
   }, []);
 
   return (
-    <div onClick={() => setIsEditing(true)} ref={ref}>
+    <div
+      onClick={() => setIsEditing(true)}
+      ref={ref}
+      className="md-editor-container"
+    >
       {isEditing ? (
         <Editor value="" />
       ) : (

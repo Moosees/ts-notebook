@@ -1,7 +1,7 @@
 .editor-container {
   height: 100%;
   position: relative;
-  width: calc(100% - 10px);
+  width: calc(100% - 11px);
 }
 
 .editor-container .button-format {

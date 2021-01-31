@@ -7,3 +7,22 @@
 .w-md-editor ul {
   line-height: 1;
 }
+
+.md-editor-container {
+  margin: 10px 0;
+}
+
+.md-editor-container .w-md-editor-bar svg {
+  display: none;
+}
+
+.md-editor-container .w-md-editor-bar {
+  background-color: #37414b;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+  background-position: 50%;
+  background-repeat: no-repeat;
+  cursor: row-resize;
+  height: 11px;
+  position: relative;
+  width: 100%;
+}
