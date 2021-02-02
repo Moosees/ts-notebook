@@ -26,3 +26,46 @@
   position: relative;
   width: 100%;
 }
+
+.md-editor-container em {
+  font-style: italic;
+}
+ 
+.md-editor-container .wmde-markdown hr {
+  border-top: 1px solid #dee5ed;
+}
+ 
+.md-editor-container .wmde-markdown ol {
+  list-style: decimal;
+}
+ 
+.md-editor-container .w-md-editor-show-live {
+  /* Hide menu bar buttons to prevent accidental delete */
+  z-index: 20;
+}
+ 
+.md-editor-container .w-md-editor-toolbar {
+  background-color: #37414b;
+  border-bottom: 1px solid gray;
+}
+ 
+.md-editor-container .w-md-editor-toolbar li button {
+  color: #d4d4d4;
+}
+ 
+.md-editor-container .w-md-editor-content {
+  background-color: #202123;
+}
+ 
+.md-editor-container .w-md-editor,
+.md-editor-container .w-md-editor .w-md-editor-text-pre {
+  color: #d4d4d4;
+}
+ 
+.md-editor-container .w-md-editor-text-pre .bold {
+  color: unset;
+}
+ 
+.md-editor-container .token.list.punctuation {
+  background-color: unset;
+}
