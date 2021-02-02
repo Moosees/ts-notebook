@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import './text-editor.css';
 
 const TextEditor: React.FC = () => {
+  const [markdown, setMarkdown] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -23,12 +24,14 @@ const TextEditor: React.FC = () => {
     <div
       onClick={() => setIsEditing(true)}
       ref={ref}
-      className="md-editor-container"
+      className="md-editor-container card"
     >
       {isEditing ? (
-        <Editor value="" />
+        <Editor value={markdown} onChange={(v) => setMarkdown(v || '')} />
       ) : (
-        <Editor.Markdown source={'# Header'} />
+        <div className="card-content">
+          <Editor.Markdown source={markdown} />
+        </div>
       )}
     </div>
   );
