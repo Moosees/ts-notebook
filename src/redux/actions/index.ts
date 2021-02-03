@@ -1,3 +1,4 @@
+import { CellTypes } from '../cell';
 import { Types } from '../types';
 
 interface DeleteCellAction {
@@ -7,7 +8,7 @@ interface DeleteCellAction {
 
 interface InsertCellBeforeAction {
   type: Types.INSERT_CELL_BEFORE;
-  payload: { id: string; type: 'code' | 'text' };
+  payload: { id: string; type: CellTypes };
 }
 
 interface MoveCellAction {
