@@ -15,12 +15,12 @@ export const deleteCell = (id: string): DeleteCellAction => ({
 });
 
 export const InsertCellBefore = (
-  id: string,
+  beforeId: string,
   type: CellTypes
 ): InsertCellBeforeAction => ({
   type: Types.INSERT_CELL_BEFORE,
   payload: {
-    id,
+    beforeId,
     type,
   },
 });
