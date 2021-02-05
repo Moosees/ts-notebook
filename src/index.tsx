@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './App';
+import CellList from './components/cell-list';
 import { store } from './redux';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <CellList />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

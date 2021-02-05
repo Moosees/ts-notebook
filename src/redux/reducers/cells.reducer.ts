@@ -15,8 +15,8 @@ interface CellsState {
 const initialState: CellsState = {
   loading: false,
   error: null,
-  order: [],
-  data: {},
+  order: ['123'],
+  data: { 123: { id: '123', type: 'code', content: '' } },
 };
 
 const cellsReducer = produce(
