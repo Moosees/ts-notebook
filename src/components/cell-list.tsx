@@ -6,7 +6,9 @@ const CellList = () => {
     order.map((id) => data[id])
   );
 
-  const cellComponents = cells.map(({ id }) => <CellItem key={id} />);
+  const cellComponents = cells.map((cell) => (
+    <CellItem key={cell.id} cell={cell} />
+  ));
 
   return <div>{cellComponents}</div>;
 };
