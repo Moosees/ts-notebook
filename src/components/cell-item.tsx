@@ -7,7 +7,12 @@ interface CellItemProps {
 }
 
 const CellItem: React.FC<CellItemProps> = ({ cell }) => {
-  const CellComponent = cell.type === 'code' ? <CodeCell /> : <TextEditor />;
+  const CellComponent =
+    cell.type === 'code' ? (
+      <CodeCell cell={cell} />
+    ) : (
+      <TextEditor cell={cell} />
+    );
 
   return <div>{CellComponent}</div>;
 };

@@ -1,11 +1,18 @@
 import Editor from '@uiw/react-md-editor';
 import { useEffect, useRef, useState } from 'react';
+import { useTypedAction } from '../hooks/use-typed-action';
+import { Cell } from '../redux';
 import './text-editor.css';
 
-const TextEditor: React.FC = () => {
-  const [markdown, setMarkdown] = useState('');
+interface TextEditorProps {
+  cell: Cell;
+}
+
+const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
   const [isEditing, setIsEditing] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+
+  const { updateCell } = useTypedAction();
 
   useEffect(() => {
     const clickOutside = (e: MouseEvent) => {
@@ -27,10 +34,13 @@ const TextEditor: React.FC = () => {
       className="md-editor-container card"
     >
       {isEditing ? (
-        <Editor value={markdown} onChange={(v) => setMarkdown(v || '')} />
+        <Editor
+          value={cell.content}
+          onChange={(v) => updateCell(cell.id, v || '')}
+        />
       ) : (
         <div className="card-content">
-          <Editor.Markdown source={markdown} />
+          <Editor.Markdown source={cell.content || '*Click to edit...*'} />
         </div>
       )}
     </div>
