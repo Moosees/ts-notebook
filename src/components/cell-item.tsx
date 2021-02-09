@@ -1,4 +1,5 @@
 import { Cell } from '../redux/';
+import ActionBar from './action-bar';
 import CodeCell from './code-cell';
 import TextEditor from './text-editor';
 
@@ -14,7 +15,12 @@ const CellItem: React.FC<CellItemProps> = ({ cell }) => {
       <TextEditor cell={cell} />
     );
 
-  return <div>{CellComponent}</div>;
+  return (
+    <div>
+      <ActionBar id={cell.id} />
+      {CellComponent}
+    </div>
+  );
 };
 
 export default CellItem;
