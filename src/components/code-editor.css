@@ -5,16 +5,16 @@
 }
 
 .editor-container .button-format {
-  opacity: 0;
+  opacity: 0.35;
   position: absolute;
   right: 15px;
   top: 0;
-  transition: opacity 0.2s ease-in;
+  transition: opacity 0.05s ease-in;
   z-index: 10;
 }
 
-.editor-container:hover .button-format {
-  opacity: 1;
+.editor-container .button-format:hover {
+  opacity: 0.9;
 }
 
 .mtk100.Identifier.JsxElement.Bracket {
