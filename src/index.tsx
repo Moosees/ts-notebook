@@ -1,3 +1,4 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bulmaswatch/slate/bulmaswatch.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';

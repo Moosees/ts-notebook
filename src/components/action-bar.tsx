@@ -1,4 +1,6 @@
 import { useTypedAction } from '../hooks/use-typed-action';
+import './action-bar.css';
+import ButtonIcon from './button-icon';
 
 interface ActionBarProps {
   id: string;
@@ -8,10 +10,10 @@ const ActionBar: React.FC<ActionBarProps> = ({ id }) => {
   const { deleteCell, moveCell } = useTypedAction();
 
   return (
-    <div>
-      <button onClick={() => moveCell(id, 'up')}>Up</button>
-      <button onClick={() => moveCell(id, 'down')}>Down</button>
-      <button onClick={() => deleteCell(id)}>Delete</button>
+    <div className="action-bar">
+      <ButtonIcon icon="fa-arrow-up" onClick={() => moveCell(id, 'up')} />
+      <ButtonIcon icon="fa-arrow-down" onClick={() => moveCell(id, 'down')} />
+      <ButtonIcon icon="fa-times" onClick={() => deleteCell(id)} />
     </div>
   );
 };
