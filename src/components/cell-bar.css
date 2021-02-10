@@ -1,0 +1,26 @@
+.cell-bar {
+  display: flex;
+  justify-content: center;
+  opacity: 0.35;
+  padding: 0.7rem 0;
+  position: relative;
+  transition: opacity 0.3s ease;
+}
+
+.cell-bar:hover {
+  opacity: 0.9;
+}
+
+.cell-bar-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+}
+
+.divider-line {
+  border-bottom: 1px dashed #35809e;
+  position: absolute;
+  top: 50%;
+  width: 75%;
+  z-index: -1;
+}
