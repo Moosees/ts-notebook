@@ -1,4 +1,6 @@
+import { Fragment } from 'react';
 import { useTypedSelector } from '../hooks/use-typed-selector';
+import CellBar from './cell-bar';
 import CellItem from './cell-item';
 
 const CellList = () => {
@@ -7,10 +9,18 @@ const CellList = () => {
   );
 
   const cellComponents = cells.map((cell) => (
-    <CellItem key={cell.id} cell={cell} />
+    <Fragment key={cell.id}>
+      <CellBar beforeId={cell.id} />
+      <CellItem cell={cell} />
+    </Fragment>
   ));
 
-  return <div>{cellComponents}</div>;
+  return (
+    <div>
+      {cellComponents}
+      <CellBar beforeId={null} />
+    </div>
+  );
 };
 
 export default CellList;
