@@ -1,18 +1,18 @@
 import { useTypedAction } from '../hooks/use-typed-action';
 import ButtonIconLabel from './button-icon-label';
-import './cell-bar.css';
+import './new-cell-bar.css';
 
 interface CellBarProps {
   beforeId: string | null;
 }
 
-const CellBar: React.FC<CellBarProps> = ({ beforeId }) => {
+const NewCellBar: React.FC<CellBarProps> = ({ beforeId }) => {
   const { insertCellBefore } = useTypedAction();
 
   return (
-    <div className="cell-bar">
+    <div className="new-cell-bar">
       <div className="divider-line" />
-      <div className="cell-bar-buttons">
+      <div className="new-cell-bar-buttons">
         <ButtonIconLabel
           onClick={() => insertCellBefore(beforeId, 'code')}
           label="Code"
@@ -28,4 +28,4 @@ const CellBar: React.FC<CellBarProps> = ({ beforeId }) => {
   );
 };
 
-export default CellBar;
+export default NewCellBar;

@@ -29,7 +29,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
   return (
     <Resizable direction="vertical">
-      <section className="code-cell-section">
+      <div className="code-cell">
         <Resizable direction="horizontal">
           <CodeEditor
             defaultValue={cell.content}
@@ -37,7 +37,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
           />
         </Resizable>
         <CodePreview code={previewCode} msg={previewMsg} />
-      </section>
+      </div>
     </Resizable>
   );
 };

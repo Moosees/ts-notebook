@@ -8,10 +8,6 @@
   line-height: 1;
 }
 
-.md-editor-container {
-  margin: 10px 0;
-}
-
 .md-editor-container .w-md-editor-bar svg {
   display: none;
 }

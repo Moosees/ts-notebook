@@ -24,7 +24,7 @@ const CellItem: React.FC<CellItemProps> = ({ cell }) => {
       </>
     );
 
-  return <div className="cell-item"> {CellComponent}</div>;
+  return <section className="cell-item"> {CellComponent}</section>;
 };
 
 export default CellItem;
