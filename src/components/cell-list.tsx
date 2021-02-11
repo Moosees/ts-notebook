@@ -10,15 +10,15 @@ const CellList = () => {
 
   const cellComponents = cells.map((cell) => (
     <Fragment key={cell.id}>
-      <NewCellBar beforeId={cell.id} />
       <CellItem cell={cell} />
+      <NewCellBar afterId={cell.id} />
     </Fragment>
   ));
 
   return (
     <div className={cells.length ? '' : 'empty-list'}>
+      <NewCellBar afterId={null} />
       {cellComponents}
-      <NewCellBar beforeId={null} />
     </div>
   );
 };

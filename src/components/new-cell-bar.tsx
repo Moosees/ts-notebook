@@ -3,23 +3,23 @@ import ButtonIconLabel from './button-icon-label';
 import './new-cell-bar.css';
 
 interface CellBarProps {
-  beforeId: string | null;
+  afterId: string | null;
 }
 
-const NewCellBar: React.FC<CellBarProps> = ({ beforeId }) => {
-  const { insertCellBefore } = useTypedAction();
+const NewCellBar: React.FC<CellBarProps> = ({ afterId }) => {
+  const { insertCellAfter } = useTypedAction();
 
   return (
     <div className="new-cell-bar">
       <div className="divider-line" />
       <div className="new-cell-bar-buttons">
         <ButtonIconLabel
-          onClick={() => insertCellBefore(beforeId, 'code')}
+          onClick={() => insertCellAfter(afterId, 'code')}
           label="Code"
           icon="fa-plus"
         />
         <ButtonIconLabel
-          onClick={() => insertCellBefore(beforeId, 'text')}
+          onClick={() => insertCellAfter(afterId, 'text')}
           label="Text"
           icon="fa-plus"
         />
