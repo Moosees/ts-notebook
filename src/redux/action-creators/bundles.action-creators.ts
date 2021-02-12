@@ -1,21 +1,25 @@
-import { BundleCompleteAction, BundleStartAction } from '../actions';
+import { Dispatch } from 'react';
+import { bundleCode } from '../../esbuild-helpers';
+import { Actions } from '../actions';
 import { Types } from '../types';
 
-export const bundleStart = (id: string): BundleStartAction => ({
-  type: Types.BUNDLE_START,
-  payload: {
-    id,
-  },
-});
+export const createBundle = (id: string, input: string) => async (
+  dispatch: Dispatch<Actions>
+) => {
+  dispatch({
+    type: Types.BUNDLE_START,
+    payload: {
+      id,
+    },
+  });
 
-export const bundleComplete = (
-  id: string,
-  code: string,
-  error: string
-): BundleCompleteAction => ({
-  type: Types.BUNDLE_COMPLETE,
-  payload: {
-    id,
-    result: { code, error },
-  },
-});
+  const result = await bundleCode(input);
+
+  dispatch({
+    type: Types.BUNDLE_COMPLETE,
+    payload: {
+      id,
+      result,
+    },
+  });
+};

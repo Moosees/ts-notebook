@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { bundleCode } from '../esbuild-helpers';
+import { useEffect } from 'react';
 import { useTypedAction } from '../hooks/use-typed-action';
 import { Cell } from '../redux';
 import './code-cell.css';
@@ -12,20 +11,15 @@ interface CodeCellProps {
 }
 
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
-  const [previewCode, setPreviewCode] = useState('');
-  const [previewMsg, setPreviewMsg] = useState('');
-
-  const { updateCell } = useTypedAction();
+  const { createBundle, updateCell } = useTypedAction();
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      const result = await bundleCode(cell.content);
-      setPreviewCode(result.code);
-      setPreviewMsg(result.message);
-    }, 600);
+      createBundle(cell.id, cell.content);
+    }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [cell.content]);
+  }, [cell.content, cell.id, createBundle]);
 
   return (
     <Resizable direction="vertical">
@@ -36,7 +30,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
             onChange={(v) => updateCell(cell.id, v)}
           />
         </Resizable>
-        <CodePreview code={previewCode} msg={previewMsg} />
+        <CodePreview id={cell.id} />
       </div>
     </Resizable>
   );

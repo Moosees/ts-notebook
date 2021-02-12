@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { useTypedSelector } from '../hooks/use-typed-selector';
 import './code-preview.css';
 
 interface PreviewProps {
-  code: string;
-  msg: string;
+  id: string;
 }
 
 const iframeScrDoc = `
@@ -22,7 +22,7 @@ const iframeScrDoc = `
             handleError(e.message);
           });
           window.addEventListener('message', (e) => {
-            if(e.data.msg) throw new Error(e.data.msg);
+            if(e.data.message) throw new Error(e.data.message);
             eval(e.data.code);
           }, false);
         </script>
@@ -30,8 +30,11 @@ const iframeScrDoc = `
     </html>
   `;
 
-const CodePreview: React.FC<PreviewProps> = ({ code, msg }) => {
+const CodePreview: React.FC<PreviewProps> = ({ id }) => {
   const iframeRef = useRef<any>();
+  const { code, message } = useTypedSelector((state) =>
+    state.bundles[id] ? state.bundles[id] : { code: '', message: '' }
+  );
 
   useEffect(() => {
     if (!iframeRef.current) return;
@@ -39,11 +42,11 @@ const CodePreview: React.FC<PreviewProps> = ({ code, msg }) => {
     iframeRef.current.srcdoc = iframeScrDoc;
 
     const timeout = setTimeout(() => {
-      iframeRef.current.contentWindow.postMessage({ code, msg }, '*');
+      iframeRef.current.contentWindow.postMessage({ code, message }, '*');
     }, 50);
 
     return () => clearTimeout(timeout);
-  }, [code, msg]);
+  }, [code, message]);
 
   return (
     <div className="preview-container">

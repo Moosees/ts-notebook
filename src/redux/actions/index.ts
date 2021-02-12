@@ -31,7 +31,7 @@ export interface BundleStartAction {
 
 export interface BundleCompleteAction {
   type: Types.BUNDLE_COMPLETE;
-  payload: { id: string; result: { code: string; error: string } };
+  payload: { id: string; result: { code: string; message: string } };
 }
 
 export type Actions =
