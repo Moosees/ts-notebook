@@ -8,7 +8,7 @@ interface ResizableProps {
 
 const Resizable: React.FC<ResizableProps> = ({ children, direction }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [resizeWidth, setResizeWidth] = useState(window.innerWidth * 0.7);
+  const [resizeWidth, setResizeWidth] = useState(window.innerWidth * 0.6);
 
   useEffect(() => {
     let timeout: any;
@@ -45,7 +45,7 @@ const Resizable: React.FC<ResizableProps> = ({ children, direction }) => {
           className: 'react-resizable-vertical',
           resizeHandles: ['s'],
           width: Infinity,
-          height: 600,
+          height: 400,
           maxConstraints: [Infinity, Infinity],
           minConstraints: [Infinity, 24],
         };
