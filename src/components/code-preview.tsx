@@ -32,8 +32,10 @@ const iframeScrDoc = `
 
 const CodePreview: React.FC<PreviewProps> = ({ id }) => {
   const iframeRef = useRef<any>();
-  const { code, message } = useTypedSelector((state) =>
-    state.bundles[id] ? state.bundles[id] : { code: '', message: '' }
+  const { code, message, isWorking } = useTypedSelector((state) =>
+    state.bundles[id]
+      ? state.bundles[id]
+      : { code: '', message: '', isWorking: true }
   );
 
   useEffect(() => {
@@ -56,6 +58,11 @@ const CodePreview: React.FC<PreviewProps> = ({ id }) => {
         sandbox="allow-scripts"
         srcDoc={iframeScrDoc}
       />
+      {isWorking && (
+        <div className="progress-container">
+          <button className="button is-loading is-danger is-outlined is-large is-rounded" />
+        </div>
+      )}
     </div>
   );
 };
