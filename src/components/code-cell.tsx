@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useTypedAction } from '../hooks/use-typed-action';
+import { useTypedSelector } from '../hooks/use-typed-selector';
 import { Cell } from '../redux';
 import './code-cell.css';
 import CodeEditor from './code-editor';
@@ -12,14 +13,22 @@ interface CodeCellProps {
 
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { createBundle, updateCell } = useTypedAction();
+  const cumulativeCode = useTypedSelector(({ cells: { data, order } }) => {
+    const cellIndex = order.indexOf(cell.id);
+    const cumulativeOrder = order.filter(
+      (cell, i) => i <= cellIndex && data[cell].type === 'code'
+    );
+
+    return cumulativeOrder.map((id) => data[id].content).join('\n');
+  });
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode);
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [cell.content, cell.id, createBundle]);
+  }, [cumulativeCode, cell.id, createBundle]);
 
   return (
     <Resizable direction="vertical">
