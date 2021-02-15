@@ -13,22 +13,34 @@ interface CodeCellProps {
 
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { createBundle, updateCell } = useTypedAction();
-  const cumulativeCode = useTypedSelector(({ cells: { data, order } }) => {
-    const cellIndex = order.indexOf(cell.id);
-    const cumulativeOrder = order.filter(
-      (cell, i) => i <= cellIndex && data[cell].type === 'code'
-    );
+  const { cumulativeCode, cumulativeIndex } = useTypedSelector(
+    ({ bundles, cells: { data, order } }) => {
+      const cellIndex = order.indexOf(cell.id);
+      const cumulativeOrder = order.filter(
+        (id, i) => i <= cellIndex && data[id].type === 'code'
+      );
+      const cumulativeIndex = cumulativeOrder.length - 1;
+      const cumulativeCode = cumulativeOrder.map((id) =>
+        id !== cell.id && bundles[id] && bundles[id].message
+          ? ''
+          : data[id].content
+      );
 
-    return cumulativeOrder.map((id) => data[id].content).join('\n');
-  });
+      return {
+        cumulativeCode,
+        cumulativeIndex,
+      };
+    }
+  );
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      createBundle(cell.id, cumulativeCode);
+      createBundle(cell.id, cumulativeCode.join('\n'));
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [cumulativeCode, cell.id, createBundle]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cumulativeCode[cumulativeIndex], cell.id, createBundle]);
 
   return (
     <Resizable direction="vertical">
