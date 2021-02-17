@@ -11,6 +11,21 @@ interface CodeCellProps {
   cell: Cell;
 }
 
+const showFunction = `
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  const show = (value) => {
+    const rootEl = document.querySelector('#root');
+    if (typeof value !== 'object') {
+      return rootEl.innerHTML = value;
+    }
+    if (value.$$typeof && value.props) {
+      return ReactDOM.render(value, rootEl);
+    }
+    return rootEl.innerHTML = JSON.stringify(value);
+  }
+`;
+
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { createBundle, updateCell } = useTypedAction();
   const { cumulativeCode, cumulativeIndex } = useTypedSelector(
@@ -35,7 +50,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      createBundle(cell.id, cumulativeCode.join('\n'));
+      createBundle(cell.id, [showFunction, ...cumulativeCode].join('\n'));
     }, 1000);
 
     return () => clearTimeout(timeout);
