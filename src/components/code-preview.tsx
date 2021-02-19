@@ -8,7 +8,11 @@ interface PreviewProps {
 
 const iframeScrDoc = `
     <html>
-      <head></head>
+      <head>
+        <style>
+          body {color: #eee;}
+        </style>
+      </head>
       <body>
         <div id="root"></div>
         <script>

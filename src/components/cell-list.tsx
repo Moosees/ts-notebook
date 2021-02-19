@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import CellItem from './cell-item';
+import './cell-list.css';
 import NewCellBar from './new-cell-bar';
 
 const CellList = () => {
@@ -16,7 +17,7 @@ const CellList = () => {
   ));
 
   return (
-    <div className={cells.length ? '' : 'empty-list'}>
+    <div className={`cell-list ${cells.length ? '' : 'empty-list'}`}>
       <NewCellBar afterId={null} />
       {cellComponents}
     </div>
