@@ -1,3 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (function () { return console.log('Hello Lerna!'); });
+exports.serve = void 0;
+var serve = function (port, filename, dir) {
+    console.log('port', port);
+    console.log('filename', filename);
+    console.log('dir', dir);
+};
+exports.serve = serve;
