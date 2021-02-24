@@ -1,5 +1,9 @@
+import express from 'express';
+
 export const serve = (port: number, filename: string, dir: string) => {
-  console.log('port', port);
-  console.log('filename', filename);
-  console.log('dir', dir);
+  const app = express();
+
+  return new Promise<void>((resolve, reject) => {
+    app.listen(port, resolve).on('error', reject);
+  });
 };
