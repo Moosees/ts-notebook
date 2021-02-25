@@ -56,7 +56,7 @@ exports.serveCommand = new commander_1.Command()
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename));
-                    return [4 /*yield*/, local_api_1.serve(parseInt(options.port), path_1.default.basename(filename, '.js') + '.js', dir)];
+                    return [4 /*yield*/, local_api_1.serve(parseInt(options.port), path_1.default.basename(filename, '.js') + '.js', dir, false)];
                 case 1:
                     _a.sent();
                     console.log("Serving " + filename + " on http://localhost:" + options.port);

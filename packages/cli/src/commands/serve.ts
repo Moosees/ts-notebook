@@ -12,7 +12,8 @@ export const serveCommand = new Command()
       await serve(
         parseInt(options.port),
         path.basename(filename, '.js') + '.js',
-        dir
+        dir,
+        false
       );
       console.log(`Serving ${filename} on http://localhost:${options.port}`);
     } catch (error) {
