@@ -1,9 +1,21 @@
-import { CellTypes, MoveDirections } from '../cell';
+import { Cell, CellTypes, MoveDirections } from '../cell';
 import { Types } from '../types';
 
 export interface DeleteCellAction {
   type: Types.DELETE_CELL;
   payload: { id: string };
+}
+
+export interface FetchCellsStartedAction {
+  type: Types.FETCH_CELLS_STARTED;
+}
+export interface FetchCellsSuccessfulAction {
+  type: Types.FETCH_CELLS_SUCCESS;
+  payload: { cells: Cell[] };
+}
+export interface FetchCellsErrorAction {
+  type: Types.FETCH_CELLS_ERROR;
+  payload: { error: string };
 }
 
 export interface InsertCellAfterAction {
@@ -36,6 +48,9 @@ export interface BundleCompleteAction {
 
 export type Actions =
   | DeleteCellAction
+  | FetchCellsStartedAction
+  | FetchCellsSuccessfulAction
+  | FetchCellsErrorAction
   | InsertCellAfterAction
   | MoveCellAction
   | UpdateCellAction

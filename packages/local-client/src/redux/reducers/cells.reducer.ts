@@ -27,6 +27,25 @@ const cellsReducer = produce(
         delete state.data[action.payload.id];
         return state;
 
+      case Types.FETCH_CELLS_STARTED:
+        state.loading = true;
+        state.error = null;
+        return state;
+
+      case Types.FETCH_CELLS_SUCCESS:
+        state.loading = false;
+        state.order = action.payload.cells.map((cell) => cell.id);
+        state.data = action.payload.cells.reduce((acc, cell) => {
+          acc[cell.id] = cell;
+          return acc;
+        }, {} as CellsState['data']);
+        return state;
+
+      case Types.FETCH_CELLS_ERROR:
+        state.loading = false;
+        state.error = action.payload.error;
+        return state;
+
       case Types.INSERT_CELL_AFTER:
         const newCell: Cell = {
           id: generateId(),

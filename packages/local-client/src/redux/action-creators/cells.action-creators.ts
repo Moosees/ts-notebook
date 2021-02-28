@@ -1,10 +1,13 @@
+import axios from 'axios';
+import { Dispatch } from 'react';
 import {
+  Actions,
   DeleteCellAction,
   InsertCellAfterAction,
   MoveCellAction,
   UpdateCellAction,
 } from '../actions';
-import { CellTypes, MoveDirections } from '../cell';
+import { Cell, CellTypes, MoveDirections } from '../cell';
 import { Types } from '../types';
 
 export const deleteCell = (id: string): DeleteCellAction => ({
@@ -13,6 +16,26 @@ export const deleteCell = (id: string): DeleteCellAction => ({
     id,
   },
 });
+
+export const fetchCells = () => async (dispatch: Dispatch<Actions>) => {
+  dispatch({ type: Types.FETCH_CELLS_STARTED });
+
+  try {
+    const {
+      data,
+    }: { data: { message: string; cells: Cell[] } } = await axios.get('/cells');
+    if (data.message === 'ok')
+      dispatch({
+        type: Types.FETCH_CELLS_SUCCESS,
+        payload: { cells: data.cells },
+      });
+  } catch (error) {
+    dispatch({
+      type: Types.FETCH_CELLS_ERROR,
+      payload: { error: error.message },
+    });
+  }
+};
 
 export const insertCellAfter = (
   afterId: string | null,
