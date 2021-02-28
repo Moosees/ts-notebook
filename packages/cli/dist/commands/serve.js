@@ -43,6 +43,7 @@ exports.serveCommand = void 0;
 var commander_1 = require("commander");
 var local_api_1 = require("local-api");
 var path_1 = __importDefault(require("path"));
+var isProduction = process.env.NODE_ENV === 'production';
 exports.serveCommand = new commander_1.Command()
     .command('serve [filename]')
     .description('Open a local notebook')
@@ -56,7 +57,7 @@ exports.serveCommand = new commander_1.Command()
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename));
-                    return [4 /*yield*/, local_api_1.serve(parseInt(options.port), path_1.default.basename(filename, '.js') + '.js', dir, false)];
+                    return [4 /*yield*/, local_api_1.serve(parseInt(options.port), path_1.default.basename(filename, '.js') + '.js', dir, !isProduction)];
                 case 1:
                     _a.sent();
                     console.log("Serving " + filename + " on http://localhost:" + options.port);

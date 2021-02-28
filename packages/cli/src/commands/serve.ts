@@ -2,6 +2,8 @@ import { Command } from 'commander';
 import { serve } from 'local-api';
 import path from 'path';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const serveCommand = new Command()
   .command('serve [filename]')
   .description('Open a local notebook')
@@ -13,7 +15,7 @@ export const serveCommand = new Command()
         parseInt(options.port),
         path.basename(filename, '.js') + '.js',
         dir,
-        false
+        !isProduction
       );
       console.log(`Serving ${filename} on http://localhost:${options.port}`);
     } catch (error) {
