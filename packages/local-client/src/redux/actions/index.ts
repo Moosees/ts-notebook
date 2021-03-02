@@ -31,6 +31,17 @@ export interface MoveCellAction {
   };
 }
 
+export interface SaveCellsStartedAction {
+  type: Types.SAVE_CELLS_STARTED;
+}
+export interface SaveCellsSuccessfulAction {
+  type: Types.SAVE_CELLS_SUCCESS;
+}
+export interface SaveCellsErrorAction {
+  type: Types.SAVE_CELLS_ERROR;
+  payload: { error: string };
+}
+
 export interface UpdateCellAction {
   type: Types.UPDATE_CELL;
   payload: { id: string; update: string };
@@ -53,6 +64,9 @@ export type Actions =
   | FetchCellsErrorAction
   | InsertCellAfterAction
   | MoveCellAction
+  | SaveCellsStartedAction
+  | SaveCellsSuccessfulAction
+  | SaveCellsErrorAction
   | UpdateCellAction
   | BundleStartAction
   | BundleCompleteAction;

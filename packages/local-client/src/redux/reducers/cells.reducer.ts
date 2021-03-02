@@ -4,19 +4,21 @@ import { Cell } from '../cell';
 import { Types } from '../types';
 
 interface CellsState {
-  loading: boolean;
-  error: string | null;
-  order: string[];
   data: {
     [key: string]: Cell;
   };
+  error: string | null;
+  loading: boolean;
+  order: string[];
+  saving: boolean;
 }
 
 const initialState: CellsState = {
-  loading: false,
-  error: null,
-  order: [],
   data: {},
+  error: null,
+  loading: false,
+  order: [],
+  saving: false,
 };
 
 const cellsReducer = produce(
@@ -73,6 +75,19 @@ const cellsReducer = produce(
 
         state.order[index] = state.order[targetIndex];
         state.order[targetIndex] = action.payload.id;
+        return state;
+
+      case Types.SAVE_CELLS_STARTED:
+        state.saving = true;
+        return state;
+
+      case Types.SAVE_CELLS_SUCCESS:
+        state.saving = false;
+        return state;
+
+      case Types.SAVE_CELLS_ERROR:
+        state.saving = false;
+        state.error = action.payload.error;
         return state;
 
       case Types.UPDATE_CELL:

@@ -8,6 +8,7 @@ import {
   UpdateCellAction,
 } from '../actions';
 import { Cell, CellTypes, MoveDirections } from '../cell';
+import { RootState } from '../reducers';
 import { Types } from '../types';
 
 export const deleteCell = (id: string): DeleteCellAction => ({
@@ -58,6 +59,30 @@ export const moveCell = (
     direction,
   },
 });
+
+export const saveCells = () => async (
+  dispatch: Dispatch<Actions>,
+  getState: () => RootState
+) => {
+  dispatch({ type: Types.SAVE_CELLS_STARTED });
+
+  const {
+    cells: { order, data },
+  } = getState();
+
+  const cells = order.map((id) => data[id]);
+
+  try {
+    await axios.post('/cells', { cells });
+
+    dispatch({ type: Types.SAVE_CELLS_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: Types.SAVE_CELLS_ERROR,
+      payload: { error: error.message },
+    });
+  }
+};
 
 export const updateCell = (id: string, update: string): UpdateCellAction => ({
   type: Types.UPDATE_CELL,
