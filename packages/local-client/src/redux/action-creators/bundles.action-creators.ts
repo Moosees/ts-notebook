@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch } from 'redux';
 import { bundleCode } from '../../esbuild-helpers';
 import { Actions } from '../actions';
 import { Types } from '../types';

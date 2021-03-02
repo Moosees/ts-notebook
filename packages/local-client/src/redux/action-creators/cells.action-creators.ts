@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Dispatch } from 'react';
+import { Dispatch } from 'redux';
 import {
   Actions,
   DeleteCellAction,
