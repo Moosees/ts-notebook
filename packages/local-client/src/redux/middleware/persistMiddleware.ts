@@ -10,16 +10,23 @@ export const persistMiddleware = ({
 }: {
   dispatch: Dispatch<Actions>;
   getState: () => RootState;
-}) => (next: (action: Actions) => void) => (action: Actions) => {
-  next(action);
-  if (
-    [
-      Types.MOVE_CELL,
-      Types.UPDATE_CELL,
-      Types.INSERT_CELL_AFTER,
-      Types.DELETE_CELL,
-    ].includes(action.type)
-  ) {
-    saveCells()(dispatch, getState);
-  }
+}) => {
+  let timeout: any;
+  return (next: (action: Actions) => void) => (action: Actions) => {
+    next(action);
+    if (
+      [
+        Types.MOVE_CELL,
+        Types.UPDATE_CELL,
+        Types.INSERT_CELL_AFTER,
+        Types.DELETE_CELL,
+      ].includes(action.type)
+    ) {
+      if (timeout) clearTimeout(timeout);
+
+      timeout = setTimeout(() => {
+        saveCells()(dispatch, getState);
+      }, 500);
+    }
+  };
 };
