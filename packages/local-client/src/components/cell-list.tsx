@@ -1,13 +1,19 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
+import { useTypedAction } from '../hooks/use-typed-action';
 import { useTypedSelector } from '../hooks/use-typed-selector';
 import CellItem from './cell-item';
 import './cell-list.css';
 import NewCellBar from './new-cell-bar';
 
 const CellList = () => {
+  const { fetchCells } = useTypedAction();
   const cells = useTypedSelector(({ cells: { order, data } }) =>
     order.map((id) => data[id])
   );
+
+  useEffect(() => {
+    fetchCells();
+  }, [fetchCells]);
 
   const cellComponents = cells.map((cell) => (
     <Fragment key={cell.id}>
