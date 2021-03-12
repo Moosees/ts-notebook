@@ -1,12 +1,18 @@
 {
-  "name": "local-api",
+  "name": "@ts-notebook/local-api",
   "version": "0.1.0",
-  "private": true,
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +26,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.6",
-    "local-client": "^0.1.0"
+    "@ts-notebook/local-client": "^0.1.0"
   }
 }

@@ -1,17 +1,24 @@
 {
-  "name": "cli",
+  "name": "ts-notebook",
   "version": "0.1.0",
-  "private": true,
   "description": "",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": "dist/index.js",
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "commander": "^7.1.0",
-    "local-api": "^0.1.0"
+    "@ts-notebook/local-api": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",

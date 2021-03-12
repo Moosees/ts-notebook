@@ -22,7 +22,9 @@ export const serve = (
       })
     );
   } else {
-    const clientPath = require.resolve('local-client/build/index.html');
+    const clientPath = require.resolve(
+      '@ts-notebook/local-client/build/index.html'
+    );
     app.use(express.static(path.dirname(clientPath)));
   }
 

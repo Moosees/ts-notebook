@@ -19,7 +19,7 @@ var serve = function (port, filename, dir, useProxy) {
         }));
     }
     else {
-        var clientPath = require.resolve('local-client/build/index.html');
+        var clientPath = require.resolve('@ts-notebook/local-client/build/index.html');
         app.use(express_1.default.static(path_1.default.dirname(clientPath)));
     }
     return new Promise(function (resolve, reject) {
