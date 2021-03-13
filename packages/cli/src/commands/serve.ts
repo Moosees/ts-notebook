@@ -17,7 +17,9 @@ export const serveCommand = new Command()
         dir,
         !isProduction
       );
-      console.log(`Serving ${filename} on http://localhost:${options.port}`);
+      console.log(
+        `Serving ${dir}/${filename} on http://localhost:${options.port}`
+      );
     } catch (error) {
       if ((error.code = 'EADDRINUSE')) {
         console.error(
