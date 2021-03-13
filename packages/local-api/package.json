@@ -1,6 +1,6 @@
 {
   "name": "@ts-notebook/local-api",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,9 +23,9 @@
     "typescript": "^4.1.5"
   },
   "dependencies": {
+    "@ts-notebook/local-client": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "http-proxy-middleware": "^1.0.6",
-    "@ts-notebook/local-client": "^0.1.0"
+    "http-proxy-middleware": "^1.0.6"
   }
 }
